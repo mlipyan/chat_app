@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.17.1",
+    "google-translate-api-browser": "^1.1.71",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},

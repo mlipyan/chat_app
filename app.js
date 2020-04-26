@@ -5,6 +5,7 @@ const path = require('path');
 const port = process.env.PORT || 8000;
 var express = require('express');
 var socketIO = require('socket.io');
+var  translate  = require("google-translate-api-browser").translate;
 
 
 server = http.createServer(function (req, res) {
@@ -62,15 +63,15 @@ var players = [];
 var io = socketIO(server);
 // Add the WebSocket handlers
 io.on('connection', function(socket) {
-  //socket.on('init', (name) => {players.push(name)});  
   socket.on('message', (data) => {
-    io.sockets.emit('message', data);
+    translate(data['msg'], { to: "ru" })
+    .then(res => {
+      data['msg'] = res.text;
+      io.sockets.emit('message', data);}).finally(()=>{});
+    
   });
 });
 
-//setInterval(function() {
-//  io.sockets.emit('message', 'hi!');
-//}, 1000);
 
 server.listen(parseInt(port));
 console.log(`Server listening on port ${port}`);
