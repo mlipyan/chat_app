@@ -22,13 +22,15 @@ function update_loc(){
 }
 
 const name = prompt('name: ');
+const lan = prompt('language: ');
+
 draw('Hi, ' + name + '. Press \'m\' to type.', loc, 'white');
 socket.emit('init', name);
 
 function keyRespond(evt){
     if (evt.keyCode === 77){
         msg = prompt('type something: ');
-        socket.emit('message', {'msg': msg, 'name': name});
+        socket.emit('message', {'msg': msg, 'name': name, 'lan': lan});
 }
     
 }

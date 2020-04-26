@@ -3,7 +3,6 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const port = process.env.PORT || 8000;
-var express = require('express');
 var socketIO = require('socket.io');
 var  translate  = require("google-translate-api-browser").translate;
 
@@ -64,7 +63,7 @@ var io = socketIO(server);
 // Add the WebSocket handlers
 io.on('connection', function(socket) {
   socket.on('message', (data) => {
-    translate(data['msg'], { to: "ru" })
+    translate(data['msg'], { to: data["lan"] })
     .then(res => {
       data['msg'] = res.text;
       io.sockets.emit('message', data);}).finally(()=>{});
