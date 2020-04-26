@@ -10,8 +10,15 @@ context.fillRect(0, 0, canvas_size, canvas_size);
 
 function draw(msg, loc, color){
     context.font = "20px Arial";
-    context.fillStyle = color;
+    context.fillStyle = color;    
     context.fillText(msg, 50, 50 + loc);
+}
+
+function update_loc(){
+    if (loc < canvas_size - 80) {loc +=30}
+    else {loc = 10;
+        context.fillStyle = "black";
+        context.fillRect(0, 0, canvas_size, canvas_size);}
 }
 
 const name = prompt('name: ');
@@ -26,12 +33,12 @@ function keyRespond(evt){
     
 }
 window.addEventListener('keydown', keyRespond);
-loc += 30;
 
 socket.on('message', function(data) {
     let msg = data['name'] + ': ' + data['msg'];
-    if (data['name'] != name) {draw(msg, loc, 'green'); loc += 30;};
-    if (data['name'] === name) {draw(msg, loc, 'pink'); loc += 30;};
+    update_loc();
+    if (data['name'] != name) {draw(msg, loc, 'green')}
+    else {draw(msg, loc, 'pink')};
 
 });
 
