@@ -64,7 +64,7 @@ var io = socketIO(server);
 // Add the WebSocket handlers
 io.on('connection', function(socket) {
   socket.on('message', (data) => {
-    translate(data['msg'], { to: "ru" })
+    translate(data['msg'], { to: data["lan"] })
     .then(res => {
       data['msg'] = res.text;
       io.sockets.emit('message', data);}).finally(()=>{});
